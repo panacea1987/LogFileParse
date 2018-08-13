@@ -6,15 +6,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Component
-public class StatisticImpl implements Statistic {
-    private final Logger logger = LoggerFactory.getLogger(Statistic.class);
+public class StatisticsImpl implements Statistics {
+    private final Logger logger = LoggerFactory.getLogger(Statistics.class);
 
     @Override
-    public List<String> getDistinctMethodName(List<OperationFromLogFile> allMethodId) {
-        List<String> distinctMethod = new ArrayList<>();
+    public HashSet<String> getDistinctMethodName(List<OperationFromLogFile> allMethodId) {
+        HashSet<String> distinctMethod = new HashSet<>();
         for (OperationFromLogFile m : allMethodId) {
             if (!distinctMethod.contains(m.getMethodName())) {
                 distinctMethod.add(m.getMethodName());
@@ -24,10 +26,10 @@ public class StatisticImpl implements Statistic {
     }
 
     @Override
-    public void printStatistic(List<String> distinctMethod, List<OperationFromLogFile> allMethod) {
+    public void printStatistic(Set<String> distinctMethod, List<OperationFromLogFile> allMethod) {
         for (String out : distinctMethod) {
-            long minTime = 99999999;
-            long maxTime = -99999999;
+            long minTime = Long.MAX_VALUE;
+            long maxTime = Long.MIN_VALUE;
             int count = 0;
             int idMaxCall = 0;
             long sumTime = 0;
@@ -44,7 +46,7 @@ public class StatisticImpl implements Statistic {
                     sumTime += in.getMethodDuration();
                 }
             }
-            logger.info(out + " min " + minTime + " max " + maxTime + " avg " + sumTime / count + " maxId " + idMaxCall + " count " + count);
+            logger.info(out + " min " + minTime + "sec," + " max " + maxTime + "sec," + " avg " + sumTime / count + "sec," + " maxId " + idMaxCall + "," + " count " + count);
         }
     }
 }

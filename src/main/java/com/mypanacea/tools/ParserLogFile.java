@@ -2,7 +2,7 @@ package com.mypanacea.tools;
 
 import com.mypanacea.enity.OperationFromLogFile;
 import com.mypanacea.enity.RowFromLogFile;
-import com.mypanacea.output.Statistic;
+import com.mypanacea.output.Statistics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class ParserLogFile implements Parser {
-    private final Logger logger = LoggerFactory.getLogger(Statistic.class);
+    private final Logger logger = LoggerFactory.getLogger(Statistics.class);
     private DateTimeFormatter formatter;
     private String positionDelimetr;
     private int dateTimePosition;
